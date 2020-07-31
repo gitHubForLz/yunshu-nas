@@ -36,4 +36,6 @@ public interface VideoService {
      * @return 文件列表
      */
     List<FileEntity> getFileEntities(String location);
+
+    boolean isVideoFile(String name);
 }

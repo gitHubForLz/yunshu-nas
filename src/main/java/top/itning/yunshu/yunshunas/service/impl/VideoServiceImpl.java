@@ -76,7 +76,8 @@ public class VideoServiceImpl implements VideoService {
                 .collect(Collectors.toList());
     }
 
-    private boolean isVideoFile(String name) {
+    @Override
+    public boolean isVideoFile(String name) {
         String suffix = name.substring(name.lastIndexOf(".") + 1).toLowerCase();
         for (String s : VIDEO_SUFFIX) {
             if (s.equals(suffix)) {

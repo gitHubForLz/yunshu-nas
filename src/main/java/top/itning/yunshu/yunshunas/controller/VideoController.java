@@ -2,6 +2,7 @@ package top.itning.yunshu.yunshunas.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
@@ -88,8 +89,31 @@ public class VideoController {
             model.addAttribute("files", fileEntityList);
             model.addAttribute("file", location.substring(i + 1));
             model.addAttribute("name", hex);
+            method(location.substring(i+1), fileEntityList);
             return "video";
         }
+    }
+
+    @Async
+    public void method(String fileName, List<FileEntity> FileEntitys) {
+        if (fileName == null) return;
+        boolean flag = false;
+        for (top.itning.yunshu.yunshunas.entity.FileEntity fileEntity : FileEntitys) {
+            if(flag){
+                boolean videoFile = videoService.isVideoFile(fileEntity.getName());
+                if(videoFile){
+                    String location = fileEntity.getLocation();
+                    videoTransformHandler.put(location);
+                    break;
+                }
+
+            }
+            if (!flag && fileName.equals(fileEntity.getName()))
+                flag = true;
+
+        }
+
+
     }
 
     @GetMapping("/video_queue")

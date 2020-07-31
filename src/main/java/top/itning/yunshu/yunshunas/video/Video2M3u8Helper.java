@@ -140,6 +140,7 @@ public class Video2M3u8Helper {
         command.add("-i");
         command.add(fromFile);
         command.add("-vcodec");
+//        command.add("-threads 12");
         if (copyVideo) {
             command.add("copy");
         } else {
