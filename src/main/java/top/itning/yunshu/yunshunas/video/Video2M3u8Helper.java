@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.jayway.jsonpath.Criteria.where;
 import static com.jayway.jsonpath.Filter.filter;
@@ -53,6 +54,8 @@ public class Video2M3u8Helper {
      */
     private static final String SPLIT_TIME_SECOND = "10";
 
+
+    private static final ConcurrentHashMap<String,Object> SRARTING = new ConcurrentHashMap<>();
 
     private final String ffmpegLocation;
     private final String ffprobeLocation;
@@ -180,6 +183,13 @@ public class Video2M3u8Helper {
         }
         this.progress = progress;
         try {
+            if(SRARTING.containsKey(fromFile) && SRARTING.get(fromFile).equals(toPath)){
+                if (logger.isDebugEnabled()) {
+                    logger.debug("  videoConvert is starting {} {} {},please wait", fromFile, toPath, fileName);
+                }
+                return;
+            }
+            SRARTING.put(fromFile,toPath);
             if (progress != null) {
                 progress.onStart(fromFile, toPath, fileName);
             }
@@ -228,6 +238,8 @@ public class Video2M3u8Helper {
             if (progress != null) {
                 progress.onError(e, fromFile, toPath, fileName);
             }
+        }finally {
+            SRARTING.remove(fromFile);
         }
     }
 

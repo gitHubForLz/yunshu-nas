@@ -24,6 +24,17 @@ public class NasProperties {
      */
     private String aria2cFile;
 
+
+    private String showDir;
+
+    public String getShowDir() {
+        return showDir;
+    }
+
+    public void setShowDir(String showDir) {
+        this.showDir = showDir;
+    }
+
     public String getOutDir() {
         return outDir;
     }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ProgressController {
     @GetMapping("/progress")
     public String progress() {
+
         return "progress";
     }
 }

@@ -47,14 +47,15 @@ public class FileController {
     @ResponseBody
     public void delFile(@RequestParam String location) throws IOException {
         String writeDir = iVideoRepository.getWriteDir(location);
-        FileUtils.deleteDirectory(new File(writeDir));
-        File file = new File(location);
-        if (!file.exists()) {
-            throw new RuntimeException("文件不存在");
-        }
-        if (!file.delete()) {
-            throw new RuntimeException("文件删除失败");
-        }
+//        FileUtils.deleteDirectory(new File(writeDir));
+//        File file = new File(location);
+//        if (!file.exists()) {
+//            throw new RuntimeException("文件不存在");
+//        }
+//        if (!file.delete()) {
+//            throw new RuntimeException("文件删除失败");
+//        }
+        return;
     }
 
     @PostMapping("/delTranscoding")

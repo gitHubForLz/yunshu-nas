@@ -1,8 +1,10 @@
 package top.itning.yunshu.yunshunas.service.impl;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import top.itning.yunshu.yunshunas.entity.FileEntity;
+import top.itning.yunshu.yunshunas.entity.NasProperties;
 import top.itning.yunshu.yunshunas.repository.IVideoRepository;
 import top.itning.yunshu.yunshunas.service.VideoService;
 
@@ -23,9 +25,11 @@ public class VideoServiceImpl implements VideoService {
     private static final String[] VIDEO_SUFFIX = new String[]{"mp4", "avi", "3gp", "wmv", "mkv", "mpeg", "rmvb"};
 
     private final IVideoRepository iVideoRepository;
+    private final NasProperties nasProperties;
 
-    public VideoServiceImpl(IVideoRepository iVideoRepository) {
+    public VideoServiceImpl(IVideoRepository iVideoRepository, NasProperties nasProperties) {
         this.iVideoRepository = iVideoRepository;
+        this.nasProperties = nasProperties;
     }
 
     @Override
@@ -42,7 +46,11 @@ public class VideoServiceImpl implements VideoService {
     public List<FileEntity> getFileEntities(String location) {
         File[] files;
         if (location == null) {
-            files = File.listRoots();
+            // 控制路径
+            String outDir = nasProperties.getShowDir();
+            if (StringUtils.isEmpty(outDir))
+                files = File.listRoots();
+            else files=new File(outDir).listFiles();
         } else {
             File file = new File(location);
             files = file.listFiles();
