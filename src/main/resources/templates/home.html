@@ -70,7 +70,7 @@
 
     function go(location) {
         if (location.dataset.dir === 'true') {
-            window.location.href = "/?location=" + encodeURIComponent(location.dataset.location)
+            window.location.href = "/home?location=" + encodeURIComponent(location.dataset.location)
         } else if (location.dataset.canplay === 'true') {
             window.location.href = "/video?location=" + encodeURIComponent(location.dataset.location)
         }
