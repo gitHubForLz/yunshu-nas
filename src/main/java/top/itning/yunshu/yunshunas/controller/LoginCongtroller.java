@@ -18,23 +18,29 @@ public class LoginCongtroller {
 
     @Autowired
     NasProperties nasProperties;
+
     @PostMapping("/user/login")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password,
-                        Map<String,Object> map, HttpSession session) {
-        if (nasProperties.getUsername().equals(username)&& nasProperties.getPassword().equals(password)){
+                        Map<String, Object> map, HttpSession session) {
+
+        String loginUser = (String) session.getAttribute("loginUser");
+        if (loginUser != null && UserCache.isValid(loginUser)) return "redirect:/home";
+
+        if (nasProperties.getUsername().equals(username) && nasProperties.getPassword().equals(password)) {
             final String s = username + System.currentTimeMillis();
             final String md5DigestAsHex = DigestUtils.md5DigestAsHex(s.getBytes());
             UserCache.add(md5DigestAsHex);
-            session.setAttribute("loginUser",md5DigestAsHex);
+            session.setAttribute("loginUser", md5DigestAsHex);
             //登录成功,防止表单重复提交,可以重定向到主页
             return "redirect:/home";
         }
-        map.put("msg","用户名或密码错误");
+        map.put("msg", "用户名或密码错误");
         return "index";
     }
+
     @RequestMapping("/user/logout")
-    public String tologin(HttpSession session){
-        session.setAttribute("loginUser",null);
+    public String tologin(HttpSession session) {
+        session.setAttribute("loginUser", null);
 
 
         return "index";
