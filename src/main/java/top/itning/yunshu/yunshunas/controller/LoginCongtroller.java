@@ -23,8 +23,8 @@ public class LoginCongtroller {
     public String login(@RequestParam("username") String username, @RequestParam("password") String password,
                         Map<String, Object> map, HttpSession session) {
 
-        String loginUser = (String) session.getAttribute("loginUser");
-        if (loginUser != null && UserCache.isValid(loginUser)) return "redirect:/home";
+        // String loginUser = (String) session.getAttribute("loginUser");
+        // if (loginUser != null && UserCache.isValid(loginUser)) return "redirect:/home";
 
         if (nasProperties.getUsername().equals(username) && nasProperties.getPassword().equals(password)) {
             final String s = username + System.currentTimeMillis();
