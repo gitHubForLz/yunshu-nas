@@ -51,6 +51,10 @@ nohup aria2c --rpc-listen-port 6800 --enable-rpc --rpc-listen-all >aria2c.log 2>
 
 - [ ] axel 下载支持
 
+# fork功能
+登录页面 --nas.username=admin --nas.password=123456
+自动解析下一个 视频
+
 # 截图
 
 ![](https://raw.githubusercontent.com/itning/yunshu-nas/master/pic/a.png)

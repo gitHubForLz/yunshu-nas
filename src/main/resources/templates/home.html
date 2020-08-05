@@ -35,7 +35,7 @@
 <section class="mdui-container">
     <div th:unless="${#lists.isEmpty(links)}" class="mdui-card" style="margin-bottom: 8px;">
         <div class="mdui-card-content links">
-            <span th:each="link:${links}"><a th:href="${'/?location='+link.link}"
+            <span th:each="link:${links}"><a th:href="${'/home?location='+link.link}"
                                              th:text="${link.name}"></a><span>&#92;</span></span>
         </div>
     </div>
