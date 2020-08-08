@@ -4,10 +4,12 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import top.itning.yunshu.yunshunas.entity.FileEntity;
+import top.itning.yunshu.yunshunas.entity.Link;
 import top.itning.yunshu.yunshunas.entity.NasProperties;
 import top.itning.yunshu.yunshunas.repository.IVideoRepository;
 import top.itning.yunshu.yunshunas.service.VideoService;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -22,14 +24,20 @@ import java.util.stream.Collectors;
  */
 @Service
 public class VideoServiceImpl implements VideoService {
-    private static final String[] VIDEO_SUFFIX = new String[]{"mp4", "avi", "3gp", "wmv", "mkv", "mpeg", "rmvb"};
+    private static final String[] VIDEO_SUFFIX = new String[]{"mp4", "avi", "3gp", "wmv", "mkv", "mpeg", "rmvb","flv"};
 
     private final IVideoRepository iVideoRepository;
     private final NasProperties nasProperties;
+    private String outDir;
 
     public VideoServiceImpl(IVideoRepository iVideoRepository, NasProperties nasProperties) {
         this.iVideoRepository = iVideoRepository;
         this.nasProperties = nasProperties;
+    }
+
+    @PostConstruct
+    public void init() {
+         outDir = nasProperties.getShowDir().replaceAll("/+", Link.SPLIT_REGEX).replaceAll("\\\\+",Link.SPLIT_REGEX);
     }
 
     @Override
@@ -42,11 +50,11 @@ public class VideoServiceImpl implements VideoService {
         FileUtils.copyFile(new File(iVideoRepository.readTsFile(name)), outputStream);
     }
 
+
     @Override
     public List<FileEntity> getFileEntities(String location) {
         File[] files;
         // 控制路径
-        String outDir = nasProperties.getShowDir();
         if (location == null) {
             if (StringUtils.isEmpty(outDir))
                 files = File.listRoots();

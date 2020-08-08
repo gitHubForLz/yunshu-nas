@@ -15,7 +15,7 @@ public class Link {
 
     private String name;
     private String link;
-    private static final String SPLIT_REGEX;
+    public static final String SPLIT_REGEX;
 
     static {
         String os = System.getProperty("os.name");
