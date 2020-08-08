@@ -45,13 +45,17 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public List<FileEntity> getFileEntities(String location) {
         File[] files;
+        // 控制路径
+        String outDir = nasProperties.getShowDir();
         if (location == null) {
-            // 控制路径
-            String outDir = nasProperties.getShowDir();
             if (StringUtils.isEmpty(outDir))
                 files = File.listRoots();
-            else files=new File(outDir).listFiles();
+            else files = new File(outDir).listFiles();
         } else {
+            // 防止手输入路径
+            boolean isContains = location.contains(outDir);
+            if (!isContains) location = outDir;
+
             File file = new File(location);
             files = file.listFiles();
         }
