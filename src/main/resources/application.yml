@@ -1,0 +1,27 @@
+logging:
+  level:
+    top: debug
+nas:
+  aria2c-file: G:/bin/aria2c.exe
+  ffmpeg-bin-dir: E:/tools/ffmpeg-20200729/bin
+  out-dir: D:/cache/nas
+  show-dir: E:/
+
+  auth:
+    enable: false
+    username: admin
+    password: 123456
+
+server:
+  port: 8766
+  undertow:
+    direct-buffers: true
+
+spring:
+  mvc:
+    static-path-pattern: /**
+  thymeleaf:
+    cache: false
+utils:
+  email:
+    enabled: false

@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import top.itning.yunshu.yunshunas.entity.FileEntity;
 import top.itning.yunshu.yunshunas.entity.Link;
-import top.itning.yunshu.yunshunas.entity.NasProperties;
+import top.itning.yunshu.yunshunas.config.properties.NasProperties;
 import top.itning.yunshu.yunshunas.repository.IVideoRepository;
 import top.itning.yunshu.yunshunas.service.VideoService;
 

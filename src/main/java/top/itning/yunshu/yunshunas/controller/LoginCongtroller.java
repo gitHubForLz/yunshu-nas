@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import top.itning.yunshu.yunshunas.config.UserCache;
-import top.itning.yunshu.yunshunas.entity.NasProperties;
+import top.itning.yunshu.yunshunas.config.properties.NasAuthProperties;
+import top.itning.yunshu.yunshunas.config.properties.NasProperties;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -17,14 +18,21 @@ import java.util.Map;
 public class LoginCongtroller {
 
     @Autowired
-    NasProperties nasProperties;
+    NasAuthProperties nasProperties;
 
+    /**
+     * 登录接口
+     * @param username
+     * @param password
+     * @param map
+     * @param session
+     * @return
+     */
     @PostMapping("/user/login")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password,
                         Map<String, Object> map, HttpSession session) {
 
-        // String loginUser = (String) session.getAttribute("loginUser");
-        // if (loginUser != null && UserCache.isValid(loginUser)) return "redirect:/home";
+        if(!nasProperties.isEnable())  return "redirect:/home";
 
         if (nasProperties.getUsername().equals(username) && nasProperties.getPassword().equals(password)) {
             final String s = username + System.currentTimeMillis();
@@ -38,9 +46,26 @@ public class LoginCongtroller {
         return "index";
     }
 
+    /**
+     * 退出跳转登录页面
+     * @param session
+     * @return
+     */
     @RequestMapping("/user/logout")
-    public String tologin(HttpSession session) {
+    public String loginOut(HttpSession session) {
         session.setAttribute("loginUser", null);
+
+
+        return "index";
+    }
+
+    /**
+     * 跳转登录页面
+     * @param session
+     * @return
+     */
+    @RequestMapping("/login")
+    public String toLogin(HttpSession session) {
 
 
         return "index";
