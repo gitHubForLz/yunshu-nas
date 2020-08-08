@@ -8,7 +8,7 @@
     <script th:src="@{/video/video.min.js}"></script>
     <script th:src="@{/video/zh-CN.js}"></script>
     <script th:src="@{/video/videojs.hotkeys.min.js}"></script>
-    <title th:text="${file+' 云舒NAS'}"></title>
+    <title style="color: red" th:text="${file+' 云舒NAS'}"></title>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -21,8 +21,8 @@
 <nav th:replace="common :: nav"></nav>
 <section class="mdui-container">
     <div th:unless="${#lists.isEmpty(links)}" class="mdui-card" style="margin-bottom: 8px;">
-        <div class="mdui-card-content links">
-            <span th:each="link:${links}"><a th:href="${'/?location='+link.link}"
+        <div  class="mdui-card-content links">
+            <span th:each="link:${links}"><a th:href="${'/home?location='+link.link}"
                                              th:text="${link.name}"></a><span>&#92;</span></span>
         </div>
     </div>
@@ -117,7 +117,7 @@
                 method: 'POST',
                 url: './del' + document.location.search,
                 success: function (data) {
-                    window.location.href = '/?location=' + path;
+                    window.location.href = '/home?location=' + path;
                 },
                 error: function (xhr, textStatus) {
                     // xhr 为 XMLHttpRequest 对象
@@ -135,7 +135,7 @@
                 method: 'POST',
                 url: './delTranscoding' + document.location.search,
                 success: function (data) {
-                    window.location.href = '/?location=' + path;
+                    window.location.href = '/home?location=' + path;
                 },
                 error: function (xhr, textStatus) {
                     // xhr 为 XMLHttpRequest 对象
@@ -148,7 +148,7 @@
 
     function go(location) {
         if (location.dataset.dir === 'true') {
-            window.location.href = "/?location=" + encodeURIComponent(location.dataset.location)
+            window.location.href = "/home?location=" + encodeURIComponent(location.dataset.location)
         } else if (location.dataset.canplay === 'true') {
             window.location.href = "/video?location=" + encodeURIComponent(location.dataset.location)
         }

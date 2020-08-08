@@ -33,14 +33,14 @@ public class FileController {
         this.iVideoRepository = iVideoRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String index(Model model, String location) throws UnsupportedEncodingException {
         if (location != null) {
             model.addAttribute("links", Link.build(location));
         }
         List<FileEntity> fileEntityList = videoService.getFileEntities(location);
         model.addAttribute("files", fileEntityList);
-        return "index";
+        return "home";
     }
 
     @PostMapping("/del")
